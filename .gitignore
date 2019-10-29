@@ -1,0 +1,5 @@
+openshift-*.tar.gz
+pull-secret.txt
+install-config*
+client*
+.aws
