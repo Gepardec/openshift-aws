@@ -1,5 +1,7 @@
-openshift-*.tar.gz
-pull-secret.txt
+.aws*
+bin*
 install-config*
 client*
-.aws
+cluster-admins*
+openshift-*.tar.gz*
+pull-secret.txt*
