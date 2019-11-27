@@ -1,8 +1,10 @@
-.aws*
-bin*
-install-config*
-client*
-cluster-admins*
-openshift-*.tar.gz*
+.aws/
+bin*/
+install-config*/
+clientID
+clientSecret
+cluster-admins
+openshift-*.tar.gz
 pull-secret.txt*
 .DS_Store
+secrets.tar

@@ -139,6 +139,8 @@ Okay, now let's do exactly what the openshift blog post describes and patch the 
 ocp-patch-cluster
 ```
 
+**Pitfall:** after the script succeeded you need to execute `oc get clusteroperators` and wait for all clusteroperators to reach the required status (True False False).
+
 ---
 
 ## Add google auth to cluster
@@ -224,6 +226,77 @@ In order to execute the bootstraping prozess quickly you can run `ocp-setup`.
 ```bash
 ocp-setup
 ```
+
+---
+
+# Bootstrap AWS Cluster with Travis
+
+## General Travis repo settings
+
+* Build pushed branches: **Disabled**
+* Build pushed pull requests: **Disabled**
+
+## Common Playground Cluster
+
+The master branch can create / destroy / recreate our common playground cluster located at
+
+***.p.aws.ocp.gepardec.com**
+
+and is treated as a productive cluster a target uptime of 24/7.
+
+## Additonal clusters
+
+Additional clusters can be created as needed. Currently available cluster names are:
+
+* 1
+* 2
+* 3
+
+### 1) Choose a Clustername
+
+To use one of those names for your cluster please add the purpose and maintainer for the cluster to this readme in **master**.
+
+### 2) New Branch
+
+Next you will need to branch your configuration from master.
+
+```
+git checkout master
+git branch -b cluster/1
+```
+
+### 3) Set Clustername
+
+In `.travis.yml` you need to change the `CLUSTER_NAME` to the value of your choice (1,2,3).
+
+```
+env:
+  global:
+    - CLUSTER_NAME=1
+    - CLUSTER_CREATE=true
+```
+
+Commit your changes and push
+
+```
+git commit -am "create new ocp cluster (1) on aws"
+git push
+```
+
+### 4) Trigger cluster creation
+
+Manually trigger the build for your branch in travis.
+
+https://travis-ci.com/gepardec/openshift-aws
+
+---
+
+## Breaking Change: Alter config files
+
+To alter more config you can copy the Repo from our NAS /Repositories/bla/blub
+change the configs to your hearts content, encrypt them with `update_secrets.tar`.
+
+Running `update_secrets.sh` will invalidate any previous encrypted secret in any branch!
 
 ---
 

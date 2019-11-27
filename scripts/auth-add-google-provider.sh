@@ -89,14 +89,14 @@ main () {
   # CHECK INPUT
   # check if all required options are given
 
-  if [-f "${SCRIPT_PARENT_DIR}/clientID" ]; then
+  if [ ! -f "${SCRIPT_PARENT_DIR}/clientID" ]; then
     >&2 echo "${SCRIPT_PARENT_DIR}/clientID not found"
     exit 1
   else 
     local clientID=$(cat ${SCRIPT_PARENT_DIR}/clientID)
   fi   
   
-  if [-f "${SCRIPT_PARENT_DIR}/clientSecret" ]; then
+  if [ ! -f "${SCRIPT_PARENT_DIR}/clientSecret" ]; then
     >&2 echo "${SCRIPT_PARENT_DIR}/clientSecret not found"
     exit 1
   fi 
