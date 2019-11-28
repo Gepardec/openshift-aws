@@ -12,6 +12,20 @@ services:
 #   only:
 #   - master
 
+notifications:
+  email:
+    on_success: never
+    on_failure: never
+  slack:
+    rooms:
+      - secure: "ABmnSs/CcijB378CMePC42XmH1bjJXti6ppH43jpUApoqS6IupJ7LWJZBTmpTlUWE4usqoAGTITpHcOdZHQq5JEhuKXdEIrRtB5sDjDqfXa+plcFwORUtE2SngHV4+aD1U+89ps51bdrZQtPOkESWZ6tINBBo7yFvBiDxREViWgo1v/cPiDMWarlp+ta15yiL1AwQdZR3sO6n0gnEXMJO9pv3KTbCZTrm9z0TMIDK0V1k/lkzTmb25rCSX65PMDwQhrAIBd/biFGlPJI3V1CcvTfuNYxf/KJn8VxhSzWYQ07Num1MRQ1XPcyIesVMsAOR86WvLcKm5H5l0aR+IwFjUd2EByaSG5lT6VWBFyJro8jQTNg2eFCklSR9x+lwEuOqtyzhBWYOlauFp6zCRNZF2h45lmWj3B3XkONldLbSoL0ylUX9kyKKiSbn1wNk1CqcUwfAzzkkO04HUNnk410qupy/5uw2upOrWSR9BYQEl8uYV3dKewJw9Lr8ujBDk939V2MDs6/cieCOFtot9qRryk1auGv2nYp7yaFePWUBy3CknsGiGPowl2eAI33vNRiXnHnMzmPmieb0bBLcEzGj5jfyt//6zdb73LiN8r1UT6w1NTRikNn92wq09k7GiutI5/ES5dHG2fdzKgtTCncfvt3Sa0YhFc8P22f7snup08="
+    template:
+      - "%{commit_subject}"
+      - "build <%{build_url}|#%{build_number}> (<%{compare_url}|%{commit}>) @%{branch}"
+      - "by %{author} %{result} in %{duration}"
+    on_success: always
+    on_failure: always
+
 env:
   global:
     - CLUSTER_NAME=p
