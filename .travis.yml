@@ -29,7 +29,7 @@ notifications:
 env:
   global:
     - CLUSTER_NAME=p
-    - CLUSTER_CREATE=false
+    - CLUSTER_CREATE=true
 
 cache:
   directories:
