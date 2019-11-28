@@ -49,9 +49,10 @@ script:
       ocp-destroy-cluster && rm -rf install-config cache/*
     fi  
     if ${CLUSTER_CREATE}; then
-      ocp-create-cluster && \
-      ocp-auth-add-google-provider && \
-      ocp-auth-add-cluster-admins && \
-      ocp-auth-del-kubeadmin
+      set -x
+      ocp-create-cluster
       cp -a install-config/. cache/
+      ocp-auth-add-google-provider
+      ocp-auth-add-cluster-admins
+      ocp-auth-del-kubeadmin
     fi
