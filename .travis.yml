@@ -29,7 +29,7 @@ notifications:
 env:
   global:
     - CLUSTER_NAME=p
-    - CLUSTER_CREATE=true
+    - CLUSTER_CREATE=false
 
 cache:
   directories:
@@ -49,7 +49,7 @@ script:
       ocp-destroy-cluster && rm -rf install-config cache/*
     fi  
     if ${CLUSTER_CREATE}; then
-      set -x
+      set -e
       ocp-create-cluster
       cp -a install-config/. cache/
       ocp-auth-add-google-provider
