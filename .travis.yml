@@ -46,7 +46,7 @@ script:
     ocp-extract
     if [ "$(ls -A cache)" ]; then
       cp -R cache install-config
-      ocp-destroy-cluster && rm -rf install-config cache/*
+      ocp-destroy-cluster && rm -rf install-config cache/* cache/.*.log cache/.*.json
     fi  
     if ${CLUSTER_CREATE}; then
       set -e
