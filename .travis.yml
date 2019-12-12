@@ -50,7 +50,7 @@ script:
       ocp-destroy-cluster && rm -rf install-config cache/* cache/.*.log cache/.*.json
     fi  
     if ${CLUSTER_CREATE}; then
-      travis_wait 30 ocp-create-cluster
+      travis_wait 30 source ./bashrc && ocp-create-cluster
       cp -a install-config/. cache/
       ocp-auth-add-google-provider
       ocp-auth-add-cluster-admins
