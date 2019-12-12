@@ -11,7 +11,7 @@
 </p>
 <br>
 
-Installing OpenShift on AWS is already quit simple. If you do not plan to do it often you can easily live with the manual steps involved in the initial setup. For us it is important to easily 
+Installing OpenShift on AWS is already quite simple. If you do not plan to do it often, you can easily live with the manual steps involved in the initial setup. For us it is important to easily 
 
 * create an OpenShift cluster
 * patch it to allow shutdown within 24h
@@ -21,13 +21,13 @@ Installing OpenShift on AWS is already quit simple. If you do not plan to do it 
 * start / stop cluster VMs
 * destroy the OpenShift cluster.
 
-In order to that frequently we have created a collection of scripts and alias to help us be as efficient as we can be. If you have a similar need we hope our work will help you speed up your manual setup steps for you.
+In order to do that frequently we have created a collection of scripts and alias to help us be as efficient as we can be. If you have a similar need, we hope our work will help you speed up your manual setup steps for you.
 
 ## Preflight
 
-We general we will follow https://cloud.redhat.com/openshift/install/aws/installer-provisioned to provision OpenShift on aws.
+In general we will follow https://cloud.redhat.com/openshift/install/aws/installer-provisioned to provision OpenShift on AWS.
 
-All alias that we have created are defined in the bashrc and listed below. To use the alias you need to source the bashrc. If you wish to run the commands independent without the alias you can do so on your own risk. 
+All aliases that we have created are defined in the bashrc and listed below. To use the alias you need to source the bashrc. If you wish to run the commands independent without the alias, you can do so on your own risk. 
 
 ```bash
 source ./bashrc
@@ -63,7 +63,7 @@ ocp-setup
 
 ### 1) Extract folders
 
-To create a new cluster on aws we need to use Redhat's new installer for OpenShift 4. First download installer, pull-secret and command-line tools and store the files in the repo folder.
+To create a new cluster on AWS we need to use RedHat's new installer for OpenShift 4. First download installer, pull-secret and command-line tools and store the files in the repo folder.
 
 Download Link: https://cloud.redhat.com/openshift/install/aws/installer-provisioned
 
@@ -77,11 +77,11 @@ ocp-extract
 
 ### 2) create config
 
-For this step you will need an aws account. More info can be found here
+For this step you will need an AWS account. More info can be found here
 
 * [Configure an AWS account](https://docs.openshift.com/container-platform/4.2/installing/installing_aws/installing-aws-account.html)
 
-Once you execute the command you will get the chance to interactively create your initial config.
+Once you execute the command, you will get the chance to interactively create your initial config.
 
 **Hint:** use `--help` to learn more about `ocp-create-config`
 
@@ -99,7 +99,7 @@ Feel free to customize the install-config to your requirements. Here a few links
 
 ### 4) create cluster
 
-Once your config is to your liking you can create the cluster simply by running
+Once your config is to your liking, you can create the cluster simply by running
 
 **Hint:** use `--help` to learn more about `ocp-create-cluster`
 
@@ -131,7 +131,7 @@ least 25 hours after installation before it can be shut down.<br>
 It also enables cluster resume at any time in the next 30 days.<br>
 > https://blog.openshift.com/enabling-openshift-4-clusters-to-stop-and-resume-cluster-vms/
 
-Okay, now let's do exactly what the openshift blog post describes and patch the cluster to allow shutdown before 24h have passed.
+Okay, now let's do exactly what the OpenShift blog post describes and patch the cluster to allow shutdown before 24h have passed.
 
 **Hint:** use `--help` to learn more about `ocp-patch-cluster`
 
@@ -147,11 +147,11 @@ ocp-patch-cluster
 
 You will need OAuth2.0 credential IDs from google to execute this step.
 
-To create or get the clientID / clientSecret use google's developer console: https://console.developers.google.com/apis/credentials
+To create or get the clientID / clientSecret use Google's developer console: https://console.developers.google.com/apis/credentials
 
 Once you have the clientID and clientSecret, store them as files (`clientID` and `clientSecret`) in the repo directory.
 
-**Hint:** file names are case sensitiv
+**Hint:** file names are case-sensitive
 
 Once the `clientID` and `clientSecret` are in place we can run the command to add google as an authentication provider to the OpenShift cluster. The default will allow gepardec.com users access to the cluster. You can alter the behavior via `--hosteddomain=<your-domain.com>`. 
 
@@ -163,14 +163,14 @@ ocp-auth-add-google-provider
 
 ## Add new cluster admins
 
-To add cluster admins to your cluster you can use `ocp-auth-add-cluster-admins`. It will create a new cluster-admins group and add a list of users to that group. Unless specified via options it will read `cluster-admins` in the repo directory. Specifiy one user per line like this:
+To add cluster admins to your cluster you can use `ocp-auth-add-cluster-admins`. It will create a new cluster-admins group and add a list of users to that group. Unless specified via options it will read `cluster-admins` in the repo directory. Specify one user per line like this:
 
 ```
 user1
 user2
 ```
 
-**Hint:** leave an empty newline at the end of the file. Otherwise the last entry will be skipped.
+**Hint:** leave an empty newline at the end of the file. Otherwise, the last entry will be skipped.
 
 **Hint:** use `--help` to learn more about `ocp-auth-add-cluster-admins`
 
@@ -206,7 +206,7 @@ ocp-start-cluster
 
 ## Destroy cluster
 
-Destroy all aws resources created by `ocp-create-cluster`.
+Destroy all AWS resources created by `ocp-create-cluster`.
 
 **Hint:** manually added resources will not be deleted!
 
@@ -219,7 +219,7 @@ ocp-destroy-cluster
 --- 
 ## All in one
 
-In order to execute the bootstraping prozess quickly you can run `ocp-setup`.
+In order to execute the bootstrapping process quickly you can run `ocp-setup`.
 
 **Hint:** this will run the above commands with the default values. If you want to alter the behavior, alter the ocp-setup function in your copy of the bashrc by introducing additional options to the commands.
 
