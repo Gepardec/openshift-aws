@@ -50,7 +50,7 @@ script:
     fi  
     if ${CLUSTER_CREATE}; then
       set -e
-      ocp-create-cluster
+      travis_wait 30 ocp-create-cluster
       cp -a install-config/. cache/
       ocp-auth-add-google-provider
       ocp-auth-add-cluster-admins
