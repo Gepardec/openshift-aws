@@ -31,11 +31,16 @@ env:
     - CLUSTER_NAME=p
     - CLUSTER_CREATE=true
 
+git:
+  lfs_skip_smudge: true
+
 cache:
   directories:
   - "cache"
+  - .git/lfs
 
 before_install:
+  - git lfs pull
   - openssl aes-256-cbc -K $encrypted_78399c9ef4b1_key -iv $encrypted_78399c9ef4b1_iv -in secrets.tar.enc -out secrets.tar -d
   - tar xf secrets.tar
   - "sed -i \"s/^  name: replaceme/  name: ${CLUSTER_NAME}/g\" install-config-*/install-config.yaml"

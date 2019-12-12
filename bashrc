@@ -89,6 +89,14 @@ function ocp-auth-add-cluster-admins () {
 readonly -f ocp-auth-add-cluster-admins
 [ "$?" -eq "0" ] || return $?
 
+# ocp-auth-add-admins
+function ocp-auth-add-admins () {
+  local command="docker run --rm -it -e TZ=Europe/Vienna -v ${openshift_aws_home}:/mnt/openshift gepardec/aws /mnt/openshift/scripts/auth-add-admins.sh"
+  echo "+ ${command} $@" && ${command} $@
+}
+readonly -f ocp-auth-add-admins
+[ "$?" -eq "0" ] || return $?
+
 # ocp-auth-del-kubeadmin
 function ocp-auth-del-kubeadmin () {
   local command="docker run --rm -it -e TZ=Europe/Vienna -v ${openshift_aws_home}:/mnt/openshift gepardec/aws /mnt/openshift/scripts/auth-del-kubeadm.sh"

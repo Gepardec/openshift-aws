@@ -4,6 +4,7 @@ install-config*/
 clientID
 clientSecret
 cluster-admins
+admins
 openshift-*.tar.gz
 pull-secret.txt*
 .DS_Store
