@@ -43,7 +43,7 @@ before_install:
 script:
   - |
     source ./bashrc
-    set -e
+    set -ex
     ocp-extract
     if [ "$(ls -A cache)" ]; then
       cp -R cache install-config
@@ -56,4 +56,4 @@ script:
       ocp-auth-add-cluster-admins
       ocp-auth-del-kubeadmin
     fi
-    set +e
+    set +ex
