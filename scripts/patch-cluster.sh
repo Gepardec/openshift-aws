@@ -205,7 +205,7 @@ EOF
   execute "oc apply -f $HOME/kubelet-bootstrap-cred-manager-ds.yaml.yaml"
   execute "oc delete secrets/csr-signer-signer secrets/csr-signer -n openshift-kube-controller-manager-operator"
   
-  execute "echo -e '+ execute oc get clusteroperators\n+ and wait for all clusteroperators to reach status: True False False"
+  execute "echo -e '+ execute oc get clusteroperators\n+ and wait for all clusteroperators to reach status: True False False'"
 }
  
 main $@
