@@ -1,5 +1,5 @@
 ![GitHub](https://img.shields.io/github/license/gepardec/openshift-aws)
-![Maintenance](https://img.shields.io/maintenance/yes/2019)
+![Maintenance](https://img.shields.io/maintenance/yes/2020)
 
 <p align="right">
 <img alt="gepardec" width=100px src="https://github.com/Gepardec/openshift-aws/raw/master/.images/gepardec.png">
@@ -44,6 +44,7 @@ ocp-create-cluster
 ocp-destroy-cluster
 
 ocp-patch-cluster
+ocp-run-letsencrypt
 
 ocp-start-cluster
 ocp-stop-cluster
@@ -140,6 +141,20 @@ ocp-patch-cluster
 ```
 
 **Pitfall:** after the script succeeded you need to execute `oc get clusteroperators` and wait for all clusteroperators to reach the required status (True False False).
+
+---
+
+## Add letsencrypt certificates
+
+Out of the box your cluster is running with self signed certificates. Let's add proper certificates with letsencrypt.
+
+**Hint:** use `--help` to learn more about `ocp-run-letsencrypt`
+
+```bash
+ocp-run-letsencrypt
+```
+
+**Pitfall:** letsencrypt certificates expire after 90 days. Cluster certificates with letsencrypt should be renewed on shedule. The functionality of automatically renewing certificates has been added to the backlog and will be implemented in the future.
 
 ---
 
@@ -305,3 +320,4 @@ Running `update_secrets.sh` will invalidate any previous encrypted secret in any
 * https://cloud.redhat.com/openshift/install/aws/installer-provisioned
 * https://blog.openshift.com/enabling-openshift-4-clusters-to-stop-and-resume-cluster-vms/
 * https://docs.openshift.com/container-platform/4.1/authentication/identity_providers/configuring-google-identity-provider.html
+* https://blog.openshift.com/requesting-and-installing-lets-encrypt-certificates-for-openshift-4/

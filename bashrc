@@ -14,7 +14,10 @@ readonly -f openshift-create-aws-dir
 
 # ocp-extract
 function ocp-extract () {
-  local command="docker run --rm -it -e TZ=Europe/Vienna -v ${openshift_aws_home}:/mnt/openshift gepardec/aws /mnt/openshift/scripts/extract.sh"
+  local command="docker run --rm -it -e TZ=Europe/Vienna \
+                  -v ${openshift_aws_home}:/mnt/openshift \
+                  gepardec/aws \
+                  /mnt/openshift/scripts/extract.sh"
   echo "+ ${command} $@" && ${command} $@
 }
 readonly -f ocp-extract
@@ -22,7 +25,11 @@ readonly -f ocp-extract
 
 # ocp-create-config
 function ocp-create-config () {
-  local command="docker run --rm -it -e TZ=Europe/Vienna -v ${openshift_aws_home}:/mnt/openshift -v ${openshift_aws_home}/.aws:/root/.aws gepardec/aws /mnt/openshift/scripts/create-config.sh"
+  local command="docker run --rm -it -e TZ=Europe/Vienna \
+                  -v ${openshift_aws_home}:/mnt/openshift \
+                  -v ${openshift_aws_home}/.aws:/root/.aws \
+                  gepardec/aws \
+                  /mnt/openshift/scripts/create-config.sh"
   openshift-create-aws-dir
   echo "+ ${command} $@" && ${command} $@
 }
@@ -31,7 +38,11 @@ readonly -f ocp-create-config
 
 # ocp-create-cluster
 function ocp-create-cluster () {
-  local command="docker run --rm -it -e TZ=Europe/Vienna -v ${openshift_aws_home}:/mnt/openshift -v ${openshift_aws_home}/.aws:/root/.aws gepardec/aws /mnt/openshift/scripts/create-cluster.sh"
+  local command="docker run --rm -it -e TZ=Europe/Vienna \
+                -v ${openshift_aws_home}:/mnt/openshift \
+                -v ${openshift_aws_home}/.aws:/root/.aws \
+                gepardec/aws \
+                /mnt/openshift/scripts/create-cluster.sh"
   openshift-create-aws-dir
   echo "+ ${command} $@" && ${command} $@
 }
@@ -40,7 +51,11 @@ readonly -f ocp-create-cluster
 
 # ocp-destroy-cluster
 function ocp-destroy-cluster () {
-  local command="docker run --rm -it -e TZ=Europe/Vienna -v ${openshift_aws_home}:/mnt/openshift -v ${openshift_aws_home}/.aws:/root/.aws gepardec/aws /mnt/openshift/scripts/destroy-cluster.sh"
+  local command="docker run --rm -it -e TZ=Europe/Vienna \
+                  -v ${openshift_aws_home}:/mnt/openshift \
+                  -v ${openshift_aws_home}/.aws:/root/.aws \
+                  gepardec/aws \
+                  /mnt/openshift/scripts/destroy-cluster.sh"
   openshift-create-aws-dir
   echo "+ ${command} $@" && ${command} $@
 }
@@ -49,7 +64,11 @@ readonly -f ocp-destroy-cluster
 
 # ocp-start-cluster
 function ocp-start-cluster () {
-  local command="docker run --rm -it -e TZ=Europe/Vienna -v ${openshift_aws_home}:/mnt/openshift -v ${openshift_aws_home}/.aws:/root/.aws gepardec/aws /mnt/openshift/scripts/start-cluster.sh"
+  local command="docker run --rm -it -e TZ=Europe/Vienna \
+                  -v ${openshift_aws_home}:/mnt/openshift \
+                  -v ${openshift_aws_home}/.aws:/root/.aws \
+                  gepardec/aws \
+                  /mnt/openshift/scripts/start-cluster.sh"
   openshift-create-aws-dir
   echo "+ ${command} $@" && ${command} $@
 }
@@ -58,7 +77,11 @@ readonly -f ocp-start-cluster
 
 # ocp-stop-cluster
 function ocp-stop-cluster () {
-  local command="docker run --rm -it -e TZ=Europe/Vienna -v ${openshift_aws_home}:/mnt/openshift -v ${openshift_aws_home}/.aws:/root/.aws gepardec/aws /mnt/openshift/scripts/stop-cluster.sh"
+  local command="docker run --rm -it -e TZ=Europe/Vienna \
+                  -v ${openshift_aws_home}:/mnt/openshift \
+                  -v ${openshift_aws_home}/.aws:/root/.aws \
+                  gepardec/aws \
+                  /mnt/openshift/scripts/stop-cluster.sh"
   openshift-create-aws-dir
   echo "+ ${command} $@" && ${command} $@
 }
@@ -67,15 +90,34 @@ readonly -f ocp-stop-cluster
 
 # ocp-patch-cluster
 function ocp-patch-cluster () {
-  local command="docker run --rm -it -e TZ=Europe/Vienna -v ${openshift_aws_home}:/mnt/openshift gepardec/aws /mnt/openshift/scripts/patch-cluster.sh"
+  local command="docker run --rm -it -e TZ=Europe/Vienna \
+                  -v ${openshift_aws_home}:/mnt/openshift \
+                  gepardec/aws \
+                  /mnt/openshift/scripts/patch-cluster.sh"
   echo "+ ${command} $@" && ${command} $@
 }
 readonly -f ocp-patch-cluster
 [ "$?" -eq "0" ] || return $?
 
+# ocp-run-letsencrypt
+function ocp-run-letsencrypt () {
+  local command="docker run --rm -it -e TZ=Europe/Vienna \
+                  -v ${openshift_aws_home}:/mnt/openshift \
+                  -v ${openshift_aws_home}/.aws:/root/.aws \
+                  -v $(echo ~)/.kube/:/root/.kube:ro \
+                  gepardec/aws \
+                  /mnt/openshift/scripts/run-letsencrypt.sh"
+  echo "+ ${command} $@" && ${command} $@
+}
+readonly -f ocp-run-letsencrypt
+[ "$?" -eq "0" ] || return $?
+
 # ocp-auth-add-google-provider
 function ocp-auth-add-google-provider () {
-  local command="docker run --rm -it -e TZ=Europe/Vienna -v ${openshift_aws_home}:/mnt/openshift gepardec/aws /mnt/openshift/scripts/auth-add-google-provider.sh"
+  local command="docker run --rm -it -e TZ=Europe/Vienna \
+                  -v ${openshift_aws_home}:/mnt/openshift \
+                  gepardec/aws \
+                  /mnt/openshift/scripts/auth-add-google-provider.sh"
   echo "+ ${command} $@" && ${command} $@
 }
 readonly -f ocp-auth-add-google-provider
@@ -83,7 +125,10 @@ readonly -f ocp-auth-add-google-provider
 
 # ocp-auth-add-cluster-admins
 function ocp-auth-add-cluster-admins () {
-  local command="docker run --rm -it -e TZ=Europe/Vienna -v ${openshift_aws_home}:/mnt/openshift gepardec/aws /mnt/openshift/scripts/auth-add-cluster-admins.sh"
+  local command="docker run --rm -it -e TZ=Europe/Vienna \
+                  -v ${openshift_aws_home}:/mnt/openshift \
+                  gepardec/aws \
+                  /mnt/openshift/scripts/auth-add-cluster-admins.sh"
   echo "+ ${command} $@" && ${command} $@
 }
 readonly -f ocp-auth-add-cluster-admins
@@ -91,7 +136,10 @@ readonly -f ocp-auth-add-cluster-admins
 
 # ocp-auth-add-admins
 function ocp-auth-add-admins () {
-  local command="docker run --rm -it -e TZ=Europe/Vienna -v ${openshift_aws_home}:/mnt/openshift gepardec/aws /mnt/openshift/scripts/auth-add-admins.sh"
+  local command="docker run --rm -it -e TZ=Europe/Vienna \
+                  -v ${openshift_aws_home}:/mnt/openshift \
+                  gepardec/aws \
+                  /mnt/openshift/scripts/auth-add-admins.sh"
   echo "+ ${command} $@" && ${command} $@
 }
 readonly -f ocp-auth-add-admins
@@ -99,7 +147,10 @@ readonly -f ocp-auth-add-admins
 
 # ocp-auth-del-kubeadmin
 function ocp-auth-del-kubeadmin () {
-  local command="docker run --rm -it -e TZ=Europe/Vienna -v ${openshift_aws_home}:/mnt/openshift gepardec/aws /mnt/openshift/scripts/auth-del-kubeadm.sh"
+  local command="docker run --rm -it -e TZ=Europe/Vienna \
+                  -v ${openshift_aws_home}:/mnt/openshift \
+                  gepardec/aws \
+                  /mnt/openshift/scripts/auth-del-kubeadm.sh"
   echo "+ ${command} $@" && ${command} $@
 }
 readonly -f ocp-auth-del-kubeadmin
