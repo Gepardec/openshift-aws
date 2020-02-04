@@ -102,7 +102,7 @@ main () {
     export LE_API=\$(oc whoami --show-server | cut -f 2 -d ':' | cut -f 3 -d '/' | sed 's/-api././') && \
     export LE_WILDCARD=\$(oc get ingresscontroller default -n openshift-ingress-operator -o jsonpath='{.status.domain}') && \
     
-    #${SCRIPT_HOME}/acme.sh/acme.sh --issue -d \${LE_API} -d *.\${LE_WILDCARD} --dns dns_aws && \
+    ${SCRIPT_HOME}/acme.sh/acme.sh --issue -d \${LE_API} -d *.\${LE_WILDCARD} --dns dns_aws && \
     cp -R /root/.acme.sh/\${LE_API}/* \${CERTDIR} && \
 
     oc -n openshift-ingress label secrets -l letsencrypt=true --overwrite delete=me && \
