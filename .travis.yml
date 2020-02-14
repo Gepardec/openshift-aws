@@ -59,6 +59,7 @@ script:
       cp -a install-config/. cache/
       ocp-auth-add-google-provider
       ocp-auth-add-cluster-admins
+      ocp-auth-add-admins
       ocp-auth-del-kubeadmin
     fi
     set +e

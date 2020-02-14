@@ -138,6 +138,7 @@ readonly -f ocp-auth-add-cluster-admins
 function ocp-auth-add-admins () {
   local command="docker run --rm -it -e TZ=Europe/Vienna \
                   -v ${openshift_aws_home}:/mnt/openshift \
+                  -v $(echo ~)/.kube/:/root/.kube:ro \
                   gepardec/aws \
                   /mnt/openshift/scripts/auth-add-admins.sh"
   echo "+ ${command} $@" && ${command} $@
