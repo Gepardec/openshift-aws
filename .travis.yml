@@ -46,13 +46,12 @@ before_install:
 
 script:
   - |
-    mkdir -p cache
     source ./bashrc
     set -e
     ocp-extract
     if [ "$(ls -A cache)" ]; then
-      cp -R cache install-config
-      ocp-destroy-cluster && rm -rf install-config cache/* cache/.*.log cache/.*.json
+      mv cache install-config
+      ocp-destroy-cluster && rm -rf install-config
     fi  
     if ${CLUSTER_CREATE}; then
       while true; do printf "."; sleep 10; done &
@@ -62,6 +61,6 @@ script:
       ocp-auth-add-cluster-admins
       ocp-auth-add-admins
       ocp-auth-del-kubeadmin
-      cp -a install-config/ cache/
+      mv install-config cache
     fi
     set +e
