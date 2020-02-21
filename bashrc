@@ -27,7 +27,7 @@ readonly -f ocp-extract
 function ocp-create-config () {
   local command="docker run --rm -it -e TZ=Europe/Vienna \
                   -v ${openshift_aws_home}:/mnt/openshift \
-                  -v ${openshift_aws_home}/.aws:/root/.aws \
+                  -v ${openshift_aws_home}/.aws:/.aws \
                   gepardec/awscli \
                   /mnt/openshift/scripts/create-config.sh"
   openshift-create-aws-dir
@@ -40,7 +40,7 @@ readonly -f ocp-create-config
 function ocp-create-cluster () {
   local command="docker run --rm -it -e TZ=Europe/Vienna \
                 -v ${openshift_aws_home}:/mnt/openshift \
-                -v ${openshift_aws_home}/.aws:/root/.aws \
+                -v ${openshift_aws_home}/.aws:/.aws \
                 gepardec/awscli \
                 /mnt/openshift/scripts/create-cluster.sh"
   openshift-create-aws-dir
@@ -53,7 +53,7 @@ readonly -f ocp-create-cluster
 function ocp-destroy-cluster () {
   local command="docker run --rm -it -e TZ=Europe/Vienna \
                   -v ${openshift_aws_home}:/mnt/openshift \
-                  -v ${openshift_aws_home}/.aws:/root/.aws \
+                  -v ${openshift_aws_home}/.aws:/.aws \
                   gepardec/awscli \
                   /mnt/openshift/scripts/destroy-cluster.sh"
   openshift-create-aws-dir
@@ -66,7 +66,7 @@ readonly -f ocp-destroy-cluster
 function ocp-start-cluster () {
   local command="docker run --rm -it -e TZ=Europe/Vienna \
                   -v ${openshift_aws_home}:/mnt/openshift \
-                  -v ${openshift_aws_home}/.aws:/root/.aws \
+                  -v ${openshift_aws_home}/.aws:/.aws \
                   gepardec/awscli \
                   /mnt/openshift/scripts/start-cluster.sh"
   openshift-create-aws-dir
@@ -79,7 +79,7 @@ readonly -f ocp-start-cluster
 function ocp-stop-cluster () {
   local command="docker run --rm -it -e TZ=Europe/Vienna \
                   -v ${openshift_aws_home}:/mnt/openshift \
-                  -v ${openshift_aws_home}/.aws:/root/.aws \
+                  -v ${openshift_aws_home}/.aws:/.aws \
                   gepardec/awscli \
                   /mnt/openshift/scripts/stop-cluster.sh"
   openshift-create-aws-dir
@@ -103,7 +103,7 @@ readonly -f ocp-patch-cluster
 function ocp-run-letsencrypt () {
   local command="docker run --rm -it -e TZ=Europe/Vienna \
                   -v ${openshift_aws_home}:/mnt/openshift \
-                  -v ${openshift_aws_home}/.aws:/root/.aws \
+                  -v ${openshift_aws_home}/.aws:/.aws \
                   -v $(echo ~)/.kube/:/root/.kube:ro \
                   gepardec/awscli \
                   /mnt/openshift/scripts/run-letsencrypt.sh"
