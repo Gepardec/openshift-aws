@@ -88,7 +88,11 @@ main () {
   ####
   # CORE LOGIC
   execute "command -v openshift-install 2&>0 || export PATH=$PATH:${SCRIPT_PARENT_DIR}/bin"
-  execute "export KUBECONFIG=${SCRIPT_PARENT_DIR}/install-config/auth/kubeconfig"
+  if [[ -f /.kube/config ]]; then
+    export KUBECONFIG=/.kube/config
+  else
+    export KUBECONFIG=${SCRIPT_PARENT_DIR}/install-config/auth/kubeconfig
+  fi
   execute "oc whoami"
 
 cat << 'EOF' >$HOME/kubelet-bootstrap-cred-manager-ds.yaml.yaml

@@ -2,18 +2,24 @@
 
 readonly openshift_aws_home=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
-function openshift-create-aws-dir () {
+function __openshift-aws-create-dirs () {
     if [ ! -d "${openshift_aws_home}/.aws" ]; then
-        echo "# create .aws folder in required location"
+        echo "# create .aws folder"
         echo "+ mkdir -p ${openshift_aws_home}/.aws"
         mkdir -p ${openshift_aws_home}/.aws
     fi
+    if [ ! -d "$(echo ~)/.kube" ]; then
+        echo "# create .kube folder"
+        echo "+ mkdir -p $(echo ~)/.kube"
+        mkdir -p $(echo ~)/.kube
+    fi
 }
-readonly -f openshift-create-aws-dir
+readonly -f __openshift-aws-create-dirs
 [ "$?" -eq "0" ] || return $?
 
 # ocp-extract
 function ocp-extract () {
+  __openshift-aws-create-dirs
   local command="docker run --rm -it -e TZ=Europe/Vienna \
                   -v ${openshift_aws_home}:/mnt/openshift \
                   gepardec/awscli \
@@ -25,12 +31,12 @@ readonly -f ocp-extract
 
 # ocp-create-config
 function ocp-create-config () {
+  __openshift-aws-create-dirs
   local command="docker run --rm -it -e TZ=Europe/Vienna \
                   -v ${openshift_aws_home}:/mnt/openshift \
                   -v ${openshift_aws_home}/.aws:/.aws \
                   gepardec/awscli \
                   /mnt/openshift/scripts/create-config.sh"
-  openshift-create-aws-dir
   echo "+ ${command} $@" && ${command} $@
 }
 readonly -f ocp-create-config
@@ -38,12 +44,12 @@ readonly -f ocp-create-config
 
 # ocp-create-cluster
 function ocp-create-cluster () {
+  __openshift-aws-create-dirs
   local command="docker run --rm -it -e TZ=Europe/Vienna \
                 -v ${openshift_aws_home}:/mnt/openshift \
                 -v ${openshift_aws_home}/.aws:/.aws \
                 gepardec/awscli \
                 /mnt/openshift/scripts/create-cluster.sh"
-  openshift-create-aws-dir
   echo "+ ${command} $@" && ${command} $@
 }
 readonly -f ocp-create-cluster
@@ -51,12 +57,12 @@ readonly -f ocp-create-cluster
 
 # ocp-destroy-cluster
 function ocp-destroy-cluster () {
+  __openshift-aws-create-dirs
   local command="docker run --rm -it -e TZ=Europe/Vienna \
                   -v ${openshift_aws_home}:/mnt/openshift \
                   -v ${openshift_aws_home}/.aws:/.aws \
                   gepardec/awscli \
                   /mnt/openshift/scripts/destroy-cluster.sh"
-  openshift-create-aws-dir
   echo "+ ${command} $@" && ${command} $@
 }
 readonly -f ocp-destroy-cluster
@@ -64,12 +70,12 @@ readonly -f ocp-destroy-cluster
 
 # ocp-start-cluster
 function ocp-start-cluster () {
+  __openshift-aws-create-dirs
   local command="docker run --rm -it -e TZ=Europe/Vienna \
                   -v ${openshift_aws_home}:/mnt/openshift \
                   -v ${openshift_aws_home}/.aws:/.aws \
                   gepardec/awscli \
                   /mnt/openshift/scripts/start-cluster.sh"
-  openshift-create-aws-dir
   echo "+ ${command} $@" && ${command} $@
 }
 readonly -f ocp-start-cluster
@@ -77,12 +83,12 @@ readonly -f ocp-start-cluster
 
 # ocp-stop-cluster
 function ocp-stop-cluster () {
+  __openshift-aws-create-dirs
   local command="docker run --rm -it -e TZ=Europe/Vienna \
                   -v ${openshift_aws_home}:/mnt/openshift \
                   -v ${openshift_aws_home}/.aws:/.aws \
                   gepardec/awscli \
                   /mnt/openshift/scripts/stop-cluster.sh"
-  openshift-create-aws-dir
   echo "+ ${command} $@" && ${command} $@
 }
 readonly -f ocp-stop-cluster
@@ -90,8 +96,10 @@ readonly -f ocp-stop-cluster
 
 # ocp-patch-cluster
 function ocp-patch-cluster () {
+  __openshift-aws-create-dirs
   local command="docker run --rm -it -e TZ=Europe/Vienna \
                   -v ${openshift_aws_home}:/mnt/openshift \
+                  -v $(echo ~)/.kube/:/.kube \
                   gepardec/awscli \
                   /mnt/openshift/scripts/patch-cluster.sh"
   echo "+ ${command} $@" && ${command} $@
@@ -99,23 +107,12 @@ function ocp-patch-cluster () {
 readonly -f ocp-patch-cluster
 [ "$?" -eq "0" ] || return $?
 
-# ocp-run-letsencrypt
-function ocp-run-letsencrypt () {
-  local command="docker run --rm -it -e TZ=Europe/Vienna \
-                  -v ${openshift_aws_home}:/mnt/openshift \
-                  -v ${openshift_aws_home}/.aws:/.aws \
-                  -v $(echo ~)/.kube/:/root/.kube:ro \
-                  gepardec/awscli \
-                  /mnt/openshift/scripts/run-letsencrypt.sh"
-  echo "+ ${command} $@" && ${command} $@
-}
-readonly -f ocp-run-letsencrypt
-[ "$?" -eq "0" ] || return $?
-
 # ocp-auth-add-google-provider
 function ocp-auth-add-google-provider () {
+  __openshift-aws-create-dirs
   local command="docker run --rm -it -e TZ=Europe/Vienna \
                   -v ${openshift_aws_home}:/mnt/openshift \
+                  -v $(echo ~)/.kube/:/.kube \
                   gepardec/awscli \
                   /mnt/openshift/scripts/auth-add-google-provider.sh"
   echo "+ ${command} $@" && ${command} $@
@@ -125,8 +122,10 @@ readonly -f ocp-auth-add-google-provider
 
 # ocp-auth-add-cluster-admins
 function ocp-auth-add-cluster-admins () {
+  __openshift-aws-create-dirs
   local command="docker run --rm -it -e TZ=Europe/Vienna \
                   -v ${openshift_aws_home}:/mnt/openshift \
+                  -v $(echo ~)/.kube/:/.kube \
                   gepardec/awscli \
                   /mnt/openshift/scripts/auth-add-cluster-admins.sh"
   echo "+ ${command} $@" && ${command} $@
@@ -136,9 +135,10 @@ readonly -f ocp-auth-add-cluster-admins
 
 # ocp-auth-add-admins
 function ocp-auth-add-admins () {
+  __openshift-aws-create-dirs
   local command="docker run --rm -it -e TZ=Europe/Vienna \
                   -v ${openshift_aws_home}:/mnt/openshift \
-                  -v $(echo ~)/.kube/:/root/.kube:ro \
+                  -v $(echo ~)/.kube/:/.kube \
                   gepardec/awscli \
                   /mnt/openshift/scripts/auth-add-admins.sh"
   echo "+ ${command} $@" && ${command} $@
@@ -148,8 +148,10 @@ readonly -f ocp-auth-add-admins
 
 # ocp-auth-del-kubeadmin
 function ocp-auth-del-kubeadmin () {
+  __openshift-aws-create-dirs
   local command="docker run --rm -it -e TZ=Europe/Vienna \
                   -v ${openshift_aws_home}:/mnt/openshift \
+                  -v $(echo ~)/.kube/:/.kube \
                   gepardec/awscli \
                   /mnt/openshift/scripts/auth-del-kubeadm.sh"
   echo "+ ${command} $@" && ${command} $@

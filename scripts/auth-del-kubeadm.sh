@@ -89,7 +89,11 @@ main () {
   # CORE LOGIC
 
   execute "command -v oc 2&>0 || export PATH=$PATH:${SCRIPT_PARENT_DIR}/bin"
-  execute "export KUBECONFIG=${SCRIPT_PARENT_DIR}/install-config/auth/kubeconfig"
+  if [[ -f /.kube/config ]]; then
+    export KUBECONFIG=/.kube/config
+  else
+    export KUBECONFIG=${SCRIPT_PARENT_DIR}/install-config/auth/kubeconfig
+  fi
   execute "oc whoami"
   execute "oc delete secrets kubeadmin -n kube-system"
  }

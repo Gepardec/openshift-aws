@@ -46,6 +46,7 @@ before_install:
 
 script:
   - |
+    mkdir -p cache
     source ./bashrc
     set -e
     ocp-extract
@@ -56,10 +57,11 @@ script:
     if ${CLUSTER_CREATE}; then
       while true; do printf "."; sleep 10; done &
       ocp-create-cluster
-      cp -a install-config/. cache/
+      ocp-patch-cluster
       ocp-auth-add-google-provider
       ocp-auth-add-cluster-admins
       ocp-auth-add-admins
       ocp-auth-del-kubeadmin
+      cp -a install-config/ cache/
     fi
     set +e
