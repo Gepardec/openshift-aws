@@ -1,8 +1,7 @@
-![GitHub](https://img.shields.io/github/license/gepardec/openshift-aws)
-![Maintenance](https://img.shields.io/maintenance/yes/2020)
-
+![gplv3](https://img.shields.io/badge/license-GPL%20v3.0-brightgreen.svg?style=flat-square)
+![Maintenance](https://img.shields.io/maintenance/yes/2020?style=flat-square)
 <p align="right">
-<img alt="gepardec" width=100px src="https://github.com/Gepardec/openshift-aws/raw/master/.images/gepardec.png">
+<img alt="gepardec" width=100px src="https://www.gepardec.com/files/gepardec_logo_light_background@2000w.png">
 </p>
 <br>
 <br>
