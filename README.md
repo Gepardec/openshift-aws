@@ -245,6 +245,8 @@ ocp-setup
 
 # Bootstrap AWS Cluster with Travis
 
+Current TF-State is saved in our GDrive Projekte/Intern/AWS TF-State
+
 ## General Travis repo settings
 
 * Build pushed branches: **Disabled**
