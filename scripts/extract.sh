@@ -89,8 +89,8 @@ main () {
   # CORE LOGIC
   set -e
   execute "mkdir -p ${SCRIPT_PARENT_DIR}/bin/"
-  execute "tar -xvzf ${SCRIPT_PARENT_DIR}/openshift-client-linux-*.tar.gz -C ${SCRIPT_PARENT_DIR}/bin/"
-  execute "tar -xvzf ${SCRIPT_PARENT_DIR}/openshift-install-linux-*.tar.gz -C ${SCRIPT_PARENT_DIR}/bin/"
+  execute "tar -xvzf ${SCRIPT_PARENT_DIR}/openshift-client-linux*.tar.gz -C ${SCRIPT_PARENT_DIR}/bin/"
+  execute "tar -xvzf ${SCRIPT_PARENT_DIR}/openshift-install-linux*.tar.gz -C ${SCRIPT_PARENT_DIR}/bin/"
 }
  
 main $@
